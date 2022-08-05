@@ -1,4 +1,4 @@
-package com.pineapple.serialization.exception;
+package com.pineapple.commons.serialization.exception;
 
 public class InvalidJsonException extends RuntimeException {
 
