@@ -1,21 +1,33 @@
-package com.pineapple.serialization;
+package com.pineapple.commons.serialization.deserialize;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.pineapple.serialization.exception.InvalidJsonException;
+import com.pineapple.commons.serialization.exception.InvalidJsonException;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Map;
 
 @NoArgsConstructor
 public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
+
+
+    @Autowired
+    private ApplicationContext context;
+
+    public AbstractJsonDeserializer<?> getDeserializer(Class<?> type) {
+        return ((Map<Class<?>, AbstractJsonDeserializer<?>>) context.getBean("deserializerMap"))
+                .get(type);
+    }
 
     public final T deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         ObjectCodec objectCodec = parser.getCodec();

@@ -1,4 +1,4 @@
-package com.pineapple.serialization;
+package com.pineapple.commons.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import lombok.AllArgsConstructor;
